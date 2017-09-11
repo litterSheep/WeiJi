@@ -49,7 +49,7 @@ public class AccountDao extends AbstractDao<Account, Long> {
      * Creates the underlying database table.
      */
     public static void createTable(Database db, boolean ifNotExists) {
-        String constraint = ifNotExists ? "IF NOT EXISTS " : "";
+        String constraint = ifNotExists ? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"ACCOUNT\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY ," + // 0: id
                 "\"YEAR\" INTEGER," + // 1: year
@@ -62,9 +62,7 @@ public class AccountDao extends AbstractDao<Account, Long> {
                 "\"TYPE_INDEX\" INTEGER);"); // 8: typeIndex
     }
 
-    /**
-     * Drops the underlying database table.
-     */
+    /** Drops the underlying database table. */
     public static void dropTable(Database db, boolean ifExists) {
         String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"ACCOUNT\"";
         db.execSQL(sql);
@@ -73,47 +71,47 @@ public class AccountDao extends AbstractDao<Account, Long> {
     @Override
     protected final void bindValues(DatabaseStatement stmt, Account entity) {
         stmt.clearBindings();
-
+ 
         Long id = entity.getId();
         if (id != null) {
             stmt.bindLong(1, id);
         }
-
+ 
         Integer year = entity.getYear();
         if (year != null) {
             stmt.bindLong(2, year);
         }
-
+ 
         Integer month = entity.getMonth();
         if (month != null) {
             stmt.bindLong(3, month);
         }
-
+ 
         Integer day = entity.getDay();
         if (day != null) {
             stmt.bindLong(4, day);
         }
-
+ 
         Long time = entity.getTime();
         if (time != null) {
             stmt.bindLong(5, time);
         }
-
+ 
         Float money = entity.getMoney();
         if (money != null) {
             stmt.bindDouble(6, money);
         }
-
+ 
         String remark = entity.getRemark();
         if (remark != null) {
             stmt.bindString(7, remark);
         }
-
+ 
         Integer type = entity.getType();
         if (type != null) {
             stmt.bindLong(8, type);
         }
-
+ 
         Integer typeIndex = entity.getTypeIndex();
         if (typeIndex != null) {
             stmt.bindLong(9, typeIndex);
@@ -123,47 +121,47 @@ public class AccountDao extends AbstractDao<Account, Long> {
     @Override
     protected final void bindValues(SQLiteStatement stmt, Account entity) {
         stmt.clearBindings();
-
+ 
         Long id = entity.getId();
         if (id != null) {
             stmt.bindLong(1, id);
         }
-
+ 
         Integer year = entity.getYear();
         if (year != null) {
             stmt.bindLong(2, year);
         }
-
+ 
         Integer month = entity.getMonth();
         if (month != null) {
             stmt.bindLong(3, month);
         }
-
+ 
         Integer day = entity.getDay();
         if (day != null) {
             stmt.bindLong(4, day);
         }
-
+ 
         Long time = entity.getTime();
         if (time != null) {
             stmt.bindLong(5, time);
         }
-
+ 
         Float money = entity.getMoney();
         if (money != null) {
             stmt.bindDouble(6, money);
         }
-
+ 
         String remark = entity.getRemark();
         if (remark != null) {
             stmt.bindString(7, remark);
         }
-
+ 
         Integer type = entity.getType();
         if (type != null) {
             stmt.bindLong(8, type);
         }
-
+ 
         Integer typeIndex = entity.getTypeIndex();
         if (typeIndex != null) {
             stmt.bindLong(9, typeIndex);
@@ -173,7 +171,7 @@ public class AccountDao extends AbstractDao<Account, Long> {
     @Override
     public Long readKey(Cursor cursor, int offset) {
         return cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0);
-    }
+    }    
 
     @Override
     public Account readEntity(Cursor cursor, int offset) {
@@ -190,7 +188,7 @@ public class AccountDao extends AbstractDao<Account, Long> {
         );
         return entity;
     }
-
+     
     @Override
     public void readEntity(Cursor cursor, Account entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
@@ -202,14 +200,14 @@ public class AccountDao extends AbstractDao<Account, Long> {
         entity.setRemark(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
         entity.setType(cursor.isNull(offset + 7) ? null : cursor.getInt(offset + 7));
         entity.setTypeIndex(cursor.isNull(offset + 8) ? null : cursor.getInt(offset + 8));
-    }
-
+     }
+    
     @Override
     protected final Long updateKeyAfterInsert(Account entity, long rowId) {
         entity.setId(rowId);
         return rowId;
     }
-
+    
     @Override
     public Long getKey(Account entity) {
         if (entity != null) {
@@ -228,5 +226,5 @@ public class AccountDao extends AbstractDao<Account, Long> {
     protected final boolean isEntityUpdateable() {
         return true;
     }
-
+    
 }

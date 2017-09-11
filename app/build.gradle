@@ -52,4 +52,5 @@ dependencies {
     compile 'com.umeng.analytics:analytics:latest.integration'
     compile 'com.orhanobut:logger:2.1.1'
     compile 'com.github.flavienlaurent.datetimepicker:library:0.0.2'
+    compile 'com.github.hackware1993:MagicIndicator:1.5.0'
 }
