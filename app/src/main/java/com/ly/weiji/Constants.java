@@ -12,6 +12,7 @@ public class Constants {
 
     public static final String DB_NAME = "recorder.db";
 
+    public static final String[] MAIN_CATEGORY = {"记账", "写日记"};
     public static final int TYPE_IN = 1;//收入
     public static final int TYPE_OUT = 2;//支出
     public static final String[] TYPES_OUT = {"支出", "饭菜", "中餐", "烟酒", "零食", "娱乐", "话费", "红包", "网购", "交通", "衣服", "房租", "水电",

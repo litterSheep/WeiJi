@@ -24,7 +24,7 @@ import java.util.List;
  * Created by ly on 2017/3/3 14:01.
  */
 
-public class StatisticsActivity extends BaseActivity implements DatePickerDialog.OnDateSetListener {
+public class StatisticsActivity extends BaseTitleActivity implements DatePickerDialog.OnDateSetListener {
     private final String YEAR = "year", MONTH = "month", DAY = "day";
     private final String CURRENT_INDEX = "currentIndex";
     private int currentIndex = 1;
