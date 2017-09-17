@@ -40,4 +40,5 @@ public class WriteAccountFragment extends BaseSwipeBackFragment {
     private void initView(View view) {
 
     }
+
 }
