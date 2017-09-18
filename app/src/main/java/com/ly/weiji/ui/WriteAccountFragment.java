@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 
 import com.ly.weiji.R;
 
+import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
+import me.yokeyword.fragmentation.anim.FragmentAnimator;
+
 /**
  * Created by LY on 2017/9/14 23:58
  */
@@ -34,11 +37,22 @@ public class WriteAccountFragment extends BaseSwipeBackFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.frg_write_account, container, false);
         initView(view);
+
         return attachToSwipeBack(view);
     }
 
     private void initView(View view) {
 
+        view.findViewById(R.id.tv_test).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                start(WriteAccountFragment.newInstance());
+            }
+        });
     }
 
+    @Override
+    public FragmentAnimator onCreateFragmentAnimator() {
+        return new DefaultHorizontalAnimator();
+    }
 }

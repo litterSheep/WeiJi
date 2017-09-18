@@ -9,14 +9,13 @@ import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
 /**
  * Created by LY on 2017/9/14 23:52
  */
-
 public class BaseSwipeBackFragment extends SwipeBackFragment {
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        getSwipeBackLayout().setEdgeOrientation(SwipeBackLayout.EDGE_RIGHT); // EDGE_LEFT(默认),EDGE_ALL
+        getSwipeBackLayout().setEdgeOrientation(SwipeBackLayout.EDGE_ALL); // EDGE_LEFT(默认),EDGE_ALL
 
         getSwipeBackLayout().setParallaxOffset(0.5f); // （类iOS）滑动退出视觉差，默认0.3
 
@@ -40,4 +39,15 @@ public class BaseSwipeBackFragment extends SwipeBackFragment {
         });
 
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
 }
