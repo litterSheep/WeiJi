@@ -10,4 +10,9 @@
     <dimen name="chart_h">240dp</dimen>
     <dimen name="bar_chart_h">180dp</dimen>
     <dimen name="line_w">0.8dp</dimen>
+
+    <dimen name="indicator_corners">2dp</dimen>
+    <dimen name="indicator_h">30dp</dimen>
+    <dimen name="write_type_wh">30dp</dimen>
+    <dimen name="write_margin">10dp</dimen>
 </resources>
