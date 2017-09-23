@@ -111,6 +111,7 @@ public class FragmentDay extends Fragment {
     private List<Account> getList(int type, int y, int m, int d) {
         if (accountManager == null)
             accountManager = new AccountManager();
+
         return accountManager.queryForDay(type, y, m, d);
     }
 
@@ -201,7 +202,7 @@ public class FragmentDay extends Fragment {
     }
 
     private void setAdapter() {
-        accounts = accountManager.queryForDay(0, year, month, day);
+        accounts = getList(0, year, month, day);
         if (accounts == null)
             accounts = new ArrayList<>();
         if (adapter == null) {
@@ -403,37 +404,23 @@ public class FragmentDay extends Fragment {
     private List<PieEntry> getPieEntries(int type) {
         List<Account> list = getList(type, year, month, day);
         List<PieEntry> entries = new ArrayList<>();
-        //key:typeIndex  value:该类型对应的总花费
-        Map<Integer, Float> types = new HashMap<>();
+        //key:desc  value:该类型对应的总花费
+        Map<String, Float> types = new HashMap<>();
         total = 0;
         for (Account account : list) {
             Float money = account.getMoney();
             total += money;
 
-            Integer typeIndex = account.getTypeIndex();
-            if (typeIndex == null) {
-                //设置为默认值
-                if (type == Constants.TYPE_OUT) {
-                    typeIndex = Constants.TYPES_OUT.length - 1;
-                } else {
-                    typeIndex = Constants.TYPES_IN.length - 1;
-                }
+            String description = account.getDescription();
+            if (types.containsKey(description)) {
+                money += types.get(description);
             }
-            if (types.containsKey(typeIndex)) {
-                money += types.get(typeIndex);
-            }
-            types.put(typeIndex, money);
+            types.put(description, money);
         }
 
-        for (Integer typeIndex : types.keySet()) {
+        for (String typeIndex : types.keySet()) {
             float money = types.get(typeIndex);
-            String name;
-            if (type == Constants.TYPE_OUT) {
-                name = Constants.TYPES_OUT[typeIndex];
-            } else {
-                name = Constants.TYPES_IN[typeIndex];
-            }
-            entries.add(new PieEntry(money, name + money));
+            entries.add(new PieEntry(money, typeIndex + money));
         }
         //按类别金额从降序排列
         Collections.sort(entries, new Comparator<PieEntry>() {

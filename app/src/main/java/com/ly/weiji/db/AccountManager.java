@@ -51,7 +51,7 @@ public class AccountManager {
                     .where(AccountDao.Properties.Year.eq(year)
                             , AccountDao.Properties.Month.eq(month)
                             , AccountDao.Properties.Day.eq(day))
-                    .orderDesc(AccountDao.Properties.Time)
+                    .orderDesc(AccountDao.Properties.WriteTime)
                     .build().list();
         } else {
             return accountDao.queryBuilder()
@@ -59,7 +59,7 @@ public class AccountManager {
                             , AccountDao.Properties.Month.eq(month)
                             , AccountDao.Properties.Day.eq(day)
                             , AccountDao.Properties.Type.eq(type))
-                    .orderDesc(AccountDao.Properties.Time)
+                    .orderDesc(AccountDao.Properties.WriteTime)
                     .build().list();
         }
     }

@@ -1,6 +1,8 @@
 package com.ly.weiji.db.greendao;
 
 import com.ly.weiji.db.Account;
+import com.ly.weiji.db.Journal;
+import com.ly.weiji.db.Type;
 
 import org.greenrobot.greendao.AbstractDao;
 import org.greenrobot.greendao.AbstractDaoSession;
@@ -20,8 +22,12 @@ import java.util.Map;
 public class DaoSession extends AbstractDaoSession {
 
     private final DaoConfig accountDaoConfig;
+    private final DaoConfig journalDaoConfig;
+    private final DaoConfig typeDaoConfig;
 
     private final AccountDao accountDao;
+    private final JournalDao journalDao;
+    private final TypeDao typeDao;
 
     public DaoSession(Database db, IdentityScopeType type, Map<Class<? extends AbstractDao<?, ?>>, DaoConfig>
             daoConfigMap) {
@@ -30,17 +36,37 @@ public class DaoSession extends AbstractDaoSession {
         accountDaoConfig = daoConfigMap.get(AccountDao.class).clone();
         accountDaoConfig.initIdentityScope(type);
 
+        journalDaoConfig = daoConfigMap.get(JournalDao.class).clone();
+        journalDaoConfig.initIdentityScope(type);
+
+        typeDaoConfig = daoConfigMap.get(TypeDao.class).clone();
+        typeDaoConfig.initIdentityScope(type);
+
         accountDao = new AccountDao(accountDaoConfig, this);
+        journalDao = new JournalDao(journalDaoConfig, this);
+        typeDao = new TypeDao(typeDaoConfig, this);
 
         registerDao(Account.class, accountDao);
+        registerDao(Journal.class, journalDao);
+        registerDao(Type.class, typeDao);
     }
 
     public void clear() {
         accountDaoConfig.clearIdentityScope();
+        journalDaoConfig.clearIdentityScope();
+        typeDaoConfig.clearIdentityScope();
     }
 
     public AccountDao getAccountDao() {
         return accountDao;
+    }
+
+    public JournalDao getJournalDao() {
+        return journalDao;
+    }
+
+    public TypeDao getTypeDao() {
+        return typeDao;
     }
 
 }

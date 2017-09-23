@@ -456,24 +456,22 @@ public class FragmentMonth extends Fragment implements OnChartValueSelectedListe
         List<PieEntry> entries = new ArrayList<>();
         if (list == null || list.size() == 0)
             return entries;
-        //key:type  value:该类型对应的总支出
-        Map<Integer, Float> types = new HashMap<>();
+        //key:description  value:该类型对应的总支出
+        Map<String, Float> types = new HashMap<>();
         for (Account account : list) {
             Float money = account.getMoney();
-
-            Integer typeIndex = account.getTypeIndex();
-            if (typeIndex == null)
-                typeIndex = Constants.TYPES_OUT.length - 1;//设置为默认值
-            if (types.containsKey(typeIndex)) {
-                money += types.get(typeIndex);
+            String description = account.getDescription();
+            if (types.containsKey(description)) {
+                money += types.get(description);
             }
-            types.put(typeIndex, money);
+            types.put(description, money);
         }
 
-        for (Integer typeIndex : types.keySet()) {
-            float money = types.get(typeIndex);
-            entries.add(new PieEntry(money, Constants.TYPES_OUT[typeIndex] + money));
+        for (String description : types.keySet()) {
+            float money = types.get(description);
+            entries.add(new PieEntry(money, description + money));
         }
+
         //按类别金额从降序排列
         Collections.sort(entries, new Comparator<PieEntry>() {
             @Override

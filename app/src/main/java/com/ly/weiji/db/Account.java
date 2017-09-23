@@ -1,7 +1,5 @@
 package com.ly.weiji.db;
 
-import com.ly.weiji.Constants;
-
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
@@ -12,35 +10,42 @@ import org.greenrobot.greendao.annotation.Id;
 @Entity
 public class Account {
 
-    @Id
+    @Id(autoincrement = true)
     private Long id;
     private Integer year;
     private Integer month;
     private Integer day;
-    private Long time;
+    private Long writeTime;
     private Float money;
     private String remark;
     /**
-     * 1： 收入 2： 支出
+     * 1： 收入(>0) 2： 支出(<0)
      */
     private Integer type;
     /**
-     * 对应 {@link Constants.TYPES_IN} 或 {@link Constants.TYPES_OUT} 的下标
+     * 类别描述
      */
-    private Integer typeIndex;
+    private String description;
 
-    @Generated(hash = 1601282061)
-    public Account(Long id, Integer year, Integer month, Integer day, Long time,
-                   Float money, String remark, Integer type, Integer typeIndex) {
+    /**
+     * 类别显示的图标
+     */
+    private Integer icon;
+
+    @Generated(hash = 2105213316)
+    public Account(Long id, Integer year, Integer month, Integer day,
+                   Long writeTime, Float money, String remark, Integer type,
+                   String description, Integer icon) {
         this.id = id;
         this.year = year;
         this.month = month;
         this.day = day;
-        this.time = time;
+        this.writeTime = writeTime;
         this.money = money;
         this.remark = remark;
         this.type = type;
-        this.typeIndex = typeIndex;
+        this.description = description;
+        this.icon = icon;
     }
 
     @Generated(hash = 882125521)
@@ -79,12 +84,12 @@ public class Account {
         this.day = day;
     }
 
-    public Long getTime() {
-        return this.time;
+    public Long getWriteTime() {
+        return this.writeTime;
     }
 
-    public void setTime(Long time) {
-        this.time = time;
+    public void setWriteTime(Long writeTime) {
+        this.writeTime = writeTime;
     }
 
     public Float getMoney() {
@@ -111,12 +116,20 @@ public class Account {
         this.type = type;
     }
 
-    public Integer getTypeIndex() {
-        return this.typeIndex;
+    public String getDescription() {
+        return this.description;
     }
 
-    public void setTypeIndex(Integer typeIndex) {
-        this.typeIndex = typeIndex;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Integer getIcon() {
+        return this.icon;
+    }
+
+    public void setIcon(Integer icon) {
+        this.icon = icon;
     }
 
 

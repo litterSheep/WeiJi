@@ -29,11 +29,12 @@ public class AccountDao extends AbstractDao<Account, Long> {
         public final static Property Year = new Property(1, Integer.class, "year", false, "YEAR");
         public final static Property Month = new Property(2, Integer.class, "month", false, "MONTH");
         public final static Property Day = new Property(3, Integer.class, "day", false, "DAY");
-        public final static Property Time = new Property(4, Long.class, "time", false, "TIME");
+        public final static Property WriteTime = new Property(4, Long.class, "writeTime", false, "WRITE_TIME");
         public final static Property Money = new Property(5, Float.class, "money", false, "MONEY");
         public final static Property Remark = new Property(6, String.class, "remark", false, "REMARK");
         public final static Property Type = new Property(7, Integer.class, "type", false, "TYPE");
-        public final static Property TypeIndex = new Property(8, Integer.class, "typeIndex", false, "TYPE_INDEX");
+        public final static Property Description = new Property(8, String.class, "description", false, "DESCRIPTION");
+        public final static Property Icon = new Property(9, Integer.class, "icon", false, "ICON");
     }
 
 
@@ -51,15 +52,16 @@ public class AccountDao extends AbstractDao<Account, Long> {
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists ? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"ACCOUNT\" (" + //
-                "\"_id\" INTEGER PRIMARY KEY ," + // 0: id
+                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "\"YEAR\" INTEGER," + // 1: year
                 "\"MONTH\" INTEGER," + // 2: month
                 "\"DAY\" INTEGER," + // 3: day
-                "\"TIME\" INTEGER," + // 4: time
+                "\"WRITE_TIME\" INTEGER," + // 4: writeTime
                 "\"MONEY\" REAL," + // 5: money
                 "\"REMARK\" TEXT," + // 6: remark
                 "\"TYPE\" INTEGER," + // 7: type
-                "\"TYPE_INDEX\" INTEGER);"); // 8: typeIndex
+                "\"DESCRIPTION\" TEXT," + // 8: description
+                "\"ICON\" INTEGER);"); // 9: icon
     }
 
     /** Drops the underlying database table. */
@@ -91,10 +93,10 @@ public class AccountDao extends AbstractDao<Account, Long> {
         if (day != null) {
             stmt.bindLong(4, day);
         }
- 
-        Long time = entity.getTime();
-        if (time != null) {
-            stmt.bindLong(5, time);
+
+        Long writeTime = entity.getWriteTime();
+        if (writeTime != null) {
+            stmt.bindLong(5, writeTime);
         }
  
         Float money = entity.getMoney();
@@ -111,10 +113,15 @@ public class AccountDao extends AbstractDao<Account, Long> {
         if (type != null) {
             stmt.bindLong(8, type);
         }
- 
-        Integer typeIndex = entity.getTypeIndex();
-        if (typeIndex != null) {
-            stmt.bindLong(9, typeIndex);
+
+        String description = entity.getDescription();
+        if (description != null) {
+            stmt.bindString(9, description);
+        }
+
+        Integer icon = entity.getIcon();
+        if (icon != null) {
+            stmt.bindLong(10, icon);
         }
     }
 
@@ -141,10 +148,10 @@ public class AccountDao extends AbstractDao<Account, Long> {
         if (day != null) {
             stmt.bindLong(4, day);
         }
- 
-        Long time = entity.getTime();
-        if (time != null) {
-            stmt.bindLong(5, time);
+
+        Long writeTime = entity.getWriteTime();
+        if (writeTime != null) {
+            stmt.bindLong(5, writeTime);
         }
  
         Float money = entity.getMoney();
@@ -161,10 +168,15 @@ public class AccountDao extends AbstractDao<Account, Long> {
         if (type != null) {
             stmt.bindLong(8, type);
         }
- 
-        Integer typeIndex = entity.getTypeIndex();
-        if (typeIndex != null) {
-            stmt.bindLong(9, typeIndex);
+
+        String description = entity.getDescription();
+        if (description != null) {
+            stmt.bindString(9, description);
+        }
+
+        Integer icon = entity.getIcon();
+        if (icon != null) {
+            stmt.bindLong(10, icon);
         }
     }
 
@@ -180,11 +192,12 @@ public class AccountDao extends AbstractDao<Account, Long> {
                 cursor.isNull(offset + 1) ? null : cursor.getInt(offset + 1), // year
                 cursor.isNull(offset + 2) ? null : cursor.getInt(offset + 2), // month
                 cursor.isNull(offset + 3) ? null : cursor.getInt(offset + 3), // day
-                cursor.isNull(offset + 4) ? null : cursor.getLong(offset + 4), // time
+                cursor.isNull(offset + 4) ? null : cursor.getLong(offset + 4), // writeTime
                 cursor.isNull(offset + 5) ? null : cursor.getFloat(offset + 5), // money
                 cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // remark
                 cursor.isNull(offset + 7) ? null : cursor.getInt(offset + 7), // type
-                cursor.isNull(offset + 8) ? null : cursor.getInt(offset + 8) // typeIndex
+                cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // description
+                cursor.isNull(offset + 9) ? null : cursor.getInt(offset + 9) // icon
         );
         return entity;
     }
@@ -195,11 +208,12 @@ public class AccountDao extends AbstractDao<Account, Long> {
         entity.setYear(cursor.isNull(offset + 1) ? null : cursor.getInt(offset + 1));
         entity.setMonth(cursor.isNull(offset + 2) ? null : cursor.getInt(offset + 2));
         entity.setDay(cursor.isNull(offset + 3) ? null : cursor.getInt(offset + 3));
-        entity.setTime(cursor.isNull(offset + 4) ? null : cursor.getLong(offset + 4));
+        entity.setWriteTime(cursor.isNull(offset + 4) ? null : cursor.getLong(offset + 4));
         entity.setMoney(cursor.isNull(offset + 5) ? null : cursor.getFloat(offset + 5));
         entity.setRemark(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
         entity.setType(cursor.isNull(offset + 7) ? null : cursor.getInt(offset + 7));
-        entity.setTypeIndex(cursor.isNull(offset + 8) ? null : cursor.getInt(offset + 8));
+        entity.setDescription(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
+        entity.setIcon(cursor.isNull(offset + 9) ? null : cursor.getInt(offset + 9));
      }
     
     @Override

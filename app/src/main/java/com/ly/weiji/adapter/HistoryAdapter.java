@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.ly.weiji.Constants;
 import com.ly.weiji.R;
 import com.ly.weiji.db.Account;
 import com.ly.weiji.utils.TimeUtil;
@@ -62,10 +61,10 @@ public class HistoryAdapter extends BaseAdapter {
         if (convertView == null) {
             viewHolder = new ViewHolder();
             convertView = inflater.inflate(R.layout.item_history, null);
-            viewHolder.tv_time = (TextView) convertView.findViewById(R.id.tv_item_time);
-            viewHolder.tv_item_type = (TextView) convertView.findViewById(R.id.tv_item_type);
-            viewHolder.tv_money = (TextView) convertView.findViewById(R.id.tv_item_money);
-            viewHolder.tv_remark = (TextView) convertView.findViewById(R.id.tv_item_remark);
+            viewHolder.tv_time = convertView.findViewById(R.id.tv_item_time);
+            viewHolder.tv_item_type = convertView.findViewById(R.id.tv_item_type);
+            viewHolder.tv_money = convertView.findViewById(R.id.tv_item_money);
+            viewHolder.tv_remark = convertView.findViewById(R.id.tv_item_remark);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -73,29 +72,20 @@ public class HistoryAdapter extends BaseAdapter {
 
         Account account = mlist.get(position);
 
-        viewHolder.tv_time.setText(TimeUtil.formatTimestamp(account.getTime()));
-        String type;
+        viewHolder.tv_time.setText(TimeUtil.formatTimestamp(account.getWriteTime()));
         int color;
-        Integer typeIndex = account.getTypeIndex();
-        if (account.getType() != null && typeIndex != null) {
-
-            if (account.getType() == Constants.TYPE_OUT) {//支出
-                type = Constants.TYPES_OUT[typeIndex];
-                color = context.getResources().getColor(R.color.mainColor1);
-            } else {//收入
-                type = Constants.TYPES_IN[typeIndex];
-                color = context.getResources().getColor(R.color.green);
-            }
-        } else {
-            type = "空类型";
-            color = context.getResources().getColor(R.color.gray_text);
+        if (account.getType() < 0) {//支出
+            color = context.getResources().getColor(R.color.mainColor1);
+        } else {//收入
+            color = context.getResources().getColor(R.color.green);
         }
+
         viewHolder.tv_item_type.setTextColor(color);
         viewHolder.tv_money.setTextColor(color);
         viewHolder.tv_remark.setTextColor(color);
         viewHolder.tv_time.setTextColor(color);
 
-        viewHolder.tv_item_type.setText(type);
+        viewHolder.tv_item_type.setText(account.getDescription());
         viewHolder.tv_money.setText(account.getMoney() + "");
         if (TextUtils.isEmpty(account.getRemark())) {
             viewHolder.tv_remark.setVisibility(View.GONE);

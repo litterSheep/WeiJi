@@ -26,6 +26,29 @@ android {
         }
     }
 
+    android.applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                File outputDirectory = new File(outputFile.parent);
+                def fileName
+                def packageName = defaultConfig.applicationId
+                def packageLastName = packageName
+                        .substring(packageName.lastIndexOf(".") + 1, packageName.length())
+
+                if (variant.buildType.name == "release") {
+
+                    println(">>>>>>>>>>>>>packageLastName:" + packageLastName)
+
+                    fileName = packageLastName.toUpperCase() + "_${variant.productFlavors[0].name}_V${defaultConfig.versionName}_RELEASE.apk"
+                } else {
+                    fileName = packageLastName + "_v${defaultConfig.versionName}_debug.apk"
+                }
+                output.outputFile = new File(outputDirectory, fileName)
+            }
+        }
+    }
+
     productFlavors {
         yingyongbao {}
         baidu {}
@@ -42,8 +65,8 @@ dependencies {
 
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support:design:26.+'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:recyclerview-v7:26.+'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 
 
     compile 'org.greenrobot:greendao:3.2.2'
@@ -55,7 +78,11 @@ dependencies {
     compile 'com.github.hackware1993:MagicIndicator:1.5.0'
     compile 'com.github.clans:fab:1.6.4'
 
+
     //fragmentation
     compile 'me.yokeyword:fragmentation:1.1.6'
     compile 'me.yokeyword:fragmentation-swipeback:1.1.6'
+
+    //日期时间选择
+    compile 'com.appeaser.sublimepickerlibrary:sublimepickerlibrary:2.1.1'
 }
