@@ -30,7 +30,7 @@ android {
         variant.outputs.each { output ->
             def outputFile = output.outputFile
             if (outputFile != null && outputFile.name.endsWith('.apk')) {
-                File outputDirectory = new File(outputFile.parent);
+                File outputDirectory = new File(outputFile.parent)
                 def fileName
                 def packageName = defaultConfig.applicationId
                 def packageLastName = packageName
@@ -63,9 +63,9 @@ dependencies {
     })
     testCompile 'junit:junit:4.12'
 
-    compile 'com.android.support:appcompat-v7:26.+'
-    compile 'com.android.support:design:26.+'
-    compile 'com.android.support:recyclerview-v7:26.+'
+    compile 'com.android.support:appcompat-v7:26.0.1'
+    compile 'com.android.support:design:26.0.1'
+    compile 'com.android.support:recyclerview-v7:26.0.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
 
 
@@ -84,5 +84,5 @@ dependencies {
     compile 'me.yokeyword:fragmentation-swipeback:1.1.6'
 
     //日期时间选择
-    compile 'com.appeaser.sublimepickerlibrary:sublimepickerlibrary:2.1.1'
+    compile 'com.wdullaer:materialdatetimepicker:3.3.0'
 }
